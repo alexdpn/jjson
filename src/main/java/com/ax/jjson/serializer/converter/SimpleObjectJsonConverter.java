@@ -9,7 +9,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
-public class SimpleObjectJsonConverter<T> extends JsonConverter<T> {
+public final class SimpleObjectJsonConverter<T> extends JsonConverter<T> {
 
     public void convert(T object, BufferedWriter bufferedWriter) throws ValidationException, IOException, IllegalAccessException {
         Validator<T> validator = getValidator();
@@ -24,7 +24,6 @@ public class SimpleObjectJsonConverter<T> extends JsonConverter<T> {
             }
 
             writeTheLastFieldWithoutCommaAtTheEnd(object, fields[fields.length - 1], bufferedWriter);
-            bufferedWriter.close();
         }
     }
 

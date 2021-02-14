@@ -23,6 +23,7 @@ public class SimpleObjectJsonConverterTest extends Configuration {
 
         SimpleObjectJsonConverter<Customer> simpleObjectJsonConverter = new SimpleObjectJsonConverter<>();
         simpleObjectJsonConverter.convert(customer, bufferedWriter);
+        simpleObjectJsonConverter.closeWriter(bufferedWriter);
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader("customer.json"));
 
