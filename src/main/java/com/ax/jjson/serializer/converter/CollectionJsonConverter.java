@@ -27,9 +27,11 @@ public final class CollectionJsonConverter<T, C> extends JsonConverter<T> {
             for(int i = 0; i < array.length -1; i++) {
                 jsonConverter.convert(array[i], bufferedWriter);
                 bufferedWriter.write(",");
+                bufferedWriter.newLine();
             }
 
             jsonConverter.convert(array[array.length - 1], bufferedWriter);
+            bufferedWriter.newLine();
             bufferedWriter.write("]");
         }
     }
@@ -45,7 +47,7 @@ public final class CollectionJsonConverter<T, C> extends JsonConverter<T> {
         bufferedWriter.newLine();
     }
 
-    public JsonConverter<C> additionalConverter() {
+    private JsonConverter<C> additionalConverter() {
         return new SimpleObjectJsonConverter<C>();
     }
 }

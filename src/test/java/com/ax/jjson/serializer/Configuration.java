@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Configuration {
 
@@ -13,7 +15,7 @@ public class Configuration {
         return new Customer(1L, "Alex", "alex@mymail.com");
     }
 
-    protected City createCityInstance() {
+    protected City createCityInstance1() {
         City city = new City();
         city.setId(1L);
         city.setCityName("Bucharest");
@@ -28,10 +30,22 @@ public class Configuration {
         visitList.add(visit2);
         visitList.add(visit3);
 
-        city.setVisitList(visitList);
+        city.setVisits(visitList);
 
         return city;
     }
+
+    protected Set<Customer> createLisOfCustomers() {
+        Set<Customer> customers = new HashSet<>(3);
+
+        customers.add(new Customer(1L, "Alex", "alex@mail.com"));
+        customers.add(new Customer(2l, "Mike", "mike@mail.com"));
+        customers.add(new Customer(3L, "John", "john@mail.com"));
+
+        return customers;
+    }
+
+
 
     @Data
     @AllArgsConstructor
@@ -47,7 +61,7 @@ public class Configuration {
     protected static class City {
         private long id;
         private String cityName;
-        private List<String> visitList;
+        private List<String> visits;
         private String country;
     }
 }

@@ -42,7 +42,7 @@ public class SimpleObjectJsonConverterTest extends Configuration {
         //close the reader
         bufferedReader.close();
 
-//        delete the file
+        //delete the file
         File file = new File("customer.json");
         file.delete();
     }
