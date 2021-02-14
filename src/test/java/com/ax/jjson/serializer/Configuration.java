@@ -1,49 +1,53 @@
 package com.ax.jjson.serializer;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Configuration {
 
-    protected static Customer createCustomerInstance() {
+    protected Customer createCustomerInstance() {
         return new Customer(1L, "Alex", "alex@mymail.com");
     }
 
+    protected City createCityInstance() {
+        City city = new City();
+        city.setId(1L);
+        city.setCityName("Bucharest");
+        city.setCountry("Romania");
+
+        String visit1 = "The Arc of Tryumph";
+        String visit2 = "Cismigiu Gardens";
+        String visit3 = "The Romanian Athenaeum";
+
+        List<String> visitList = new ArrayList<>(3);
+        visitList.add(visit1);
+        visitList.add(visit2);
+        visitList.add(visit3);
+
+        city.setVisitList(visitList);
+
+        return city;
+    }
+
+    @Data
+    @AllArgsConstructor
     protected static class Customer {
         private long id;
         private String name;
         private String email;
-
-        public Customer() {
-        }
-
-        public Customer(long id, String name, String email) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public void setId(long id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
     }
 
-    protected static class ClassWithNoFields {}
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    protected static class City {
+        private long id;
+        private String cityName;
+        private List<String> visitList;
+        private String country;
+    }
 }
