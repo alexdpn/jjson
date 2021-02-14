@@ -1,5 +1,6 @@
-package com.ax.jjson.serializer;
+package com.ax.jjson.serializer.file;
 
+import com.ax.jjson.serializer.Validator;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
 
 import java.io.BufferedWriter;
