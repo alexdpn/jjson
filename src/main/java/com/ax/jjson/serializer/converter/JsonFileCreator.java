@@ -15,11 +15,15 @@ public class JsonFileCreator {
         this.validator = validator;
     }
 
-    public BufferedWriter createJsonFileWriter(String fileName) throws ValidationException, IOException {
+    public BufferedWriter createJsonFileWriter(String fileName) throws ValidationException {
         //validate the file extension
         if(!validator.validate(fileName))
             throw new ValidationException("The file extension is wrong. Please use the .json extension");
 
-        return new BufferedWriter(new FileWriter(fileName));
+        try {
+            return new BufferedWriter(new FileWriter(fileName));
+        } catch (IOException exception) {
+            return null;
+        }
     }
 }
