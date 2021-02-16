@@ -24,21 +24,32 @@ public final class ObjectWithCollectionJsonConverter<T> extends JsonConverter<T>
 
             Field[] fields = object.getClass().getDeclaredFields();
             for(int i = 0; i < fields.length -1; i++) {
-                if(fields[i].getType().isAssignableFrom(Collection.class)){
-                    bufferedWriter.write("{");
+                if(Collection.class.isAssignableFrom(fields[i].getType())) {
+                    fields[i].setAccessible(true);
                     bufferedWriter.newLine();
 
-                    bufferedWriter.write("\"" + fields[i].getClass().getName() + "\" : ");
+                    bufferedWriter.write("\"" + fields[i].getName() + "\" : ");
                     bufferedWriter.newLine();
 
                     jsonConverter.convert(fields[i].get(object), bufferedWriter);
+                    bufferedWriter.write(",");
                 } else {
                     writeFieldWithComma(object, fields[i], bufferedWriter);
                 }
             }
 
-            if(!fields[fields.length - 1].getType().isAssignableFrom(Collection.class)) {
+            if(!Collection.class.isAssignableFrom(fields[fields.length - 1].getType())) {
                 writeTheLastFieldWithoutCommaAtTheEnd(object, fields[fields.length - 1], bufferedWriter);
+            } else {
+                fields[fields.length - 1].setAccessible(true);
+                bufferedWriter.newLine();
+
+                bufferedWriter.write("\"" + fields[fields.length - 1].getName() + "\" : ");
+                bufferedWriter.newLine();
+
+                jsonConverter.convert(fields[fields.length - 1].get(object), bufferedWriter);
+                bufferedWriter.newLine();
+                bufferedWriter.write("}");
             }
         }
     }

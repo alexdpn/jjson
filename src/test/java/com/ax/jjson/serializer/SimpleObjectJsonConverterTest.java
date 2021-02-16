@@ -18,15 +18,15 @@ public class SimpleObjectJsonConverterTest extends Configuration {
 
     @Test
     public void testSimpleObjectSerializer() throws Exception {
-        Customer customer = createCustomerInstance();
+        Player Player = createPlayerInstance();
         JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
-        BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("customer.json");
+        BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("player.json");
 
-        SimpleObjectJsonConverter<Customer> simpleObjectJsonConverter = new SimpleObjectJsonConverter<>();
-        simpleObjectJsonConverter.convert(customer, bufferedWriter);
+        JsonConverter<Player> simpleObjectJsonConverter = new SimpleObjectJsonConverter<>();
+        simpleObjectJsonConverter.convert(Player, bufferedWriter);
         simpleObjectJsonConverter.closeWriter(bufferedWriter);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("customer.json"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("player.json"));
 
         String firstLine = bufferedReader.readLine();
         String secondLine = bufferedReader.readLine();
@@ -44,7 +44,7 @@ public class SimpleObjectJsonConverterTest extends Configuration {
         bufferedReader.close();
 
         //delete the file
-        File file = new File("customer.json");
+        File file = new File("player.json");
         file.delete();
     }
 

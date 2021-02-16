@@ -11,8 +11,8 @@ import java.util.Set;
 
 public class Configuration {
 
-    protected Customer createCustomerInstance() {
-        return new Customer(1L, "Alex", "alex@mymail.com");
+    protected Player createPlayerInstance() {
+        return new Player(1L, "Alex", "alex@mymail.com");
     }
 
     protected City createCityInstance1() {
@@ -35,21 +35,23 @@ public class Configuration {
         return city;
     }
 
-    protected Set<Customer> createLisOfCustomers() {
-        Set<Customer> customers = new HashSet<>(3);
+    protected Set<Player> createSetOfPlayers() {
+        Set<Player> players = new HashSet<>(3);
 
-        customers.add(new Customer(1L, "Alex", "alex@mail.com"));
-        customers.add(new Customer(2l, "Mike", "mike@mail.com"));
-        customers.add(new Customer(3L, "John", "john@mail.com"));
+        players.add(new Player(1L, "Alex", "alex@mail.com"));
+        players.add(new Player(2l, "Mike", "mike@mail.com"));
+        players.add(new Player(3L, "John", "john@mail.com"));
 
-        return customers;
+        return players;
     }
 
-
+    protected OnlineGame createOnlineGameInstance() {
+        return new OnlineGame(1L, "Java Game", createSetOfPlayers());
+    }
 
     @Data
     @AllArgsConstructor
-    protected static class Customer {
+    protected static class Player {
         private long id;
         private String name;
         private String email;
@@ -63,5 +65,14 @@ public class Configuration {
         private String cityName;
         private List<String> visits;
         private String country;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    protected static class OnlineGame {
+        private long id;
+        private String name;
+        private Set<Player> players;
     }
 }

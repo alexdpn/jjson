@@ -10,7 +10,6 @@ import java.lang.reflect.Field;
 
 
 public abstract class JsonConverter<T> {
-
     /**
      * This method is used to convert the object to a json file
      * @param object the object to be converted to JSON
@@ -61,6 +60,11 @@ public abstract class JsonConverter<T> {
         return new JsonFileCreator(new FileNameExtensionValidator());
     }
 
+    /**
+     * This method is use to close the writer
+     * @param bufferedWriter the writer used to write to the json file
+     * @throws IOException
+     */
     public final void closeWriter(BufferedWriter bufferedWriter) throws IOException {
         bufferedWriter.close();
     }

@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 
 public final class SimpleObjectJsonConverter<T> extends JsonConverter<T> {
 
+    @Override
     public void convert(T object, BufferedWriter bufferedWriter) throws ValidationException, IOException, IllegalAccessException {
         Validator<T> validator = getValidator();
 
