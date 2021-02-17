@@ -1,11 +1,9 @@
 package com.ax.jjson.serializer;
 
-import com.ax.jjson.serializer.converter.JsonFileCreator;
-import com.ax.jjson.serializer.converter.ToJsonConverter;
+import com.ax.jjson.serializer.converter.SimpleObjectJsonConverter;
+import com.ax.jjson.serializer.file.JsonFileCreator;
 import com.ax.jjson.serializer.validator.FileNameExtensionValidator;
-import com.ax.jjson.serializer.validator.ObjectValidator;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -16,25 +14,19 @@ import java.io.FileReader;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JsonConverterTest extends Configuration {
-
-    private JsonFileCreator jsonFileCreator;
-    private ToJsonConverter<Customer> toJsonConverter;
-
-    @BeforeEach
-    public void init() {
-        jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
-        toJsonConverter = new ToJsonConverter<Customer>(new ObjectValidator());
-    }
+public class SimpleObjectJsonConverterTest extends Configuration {
 
     @Test
     public void testSimpleObjectSerializer() throws Exception {
-        Customer customer = createCustomerInstance();
-        BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("customer.json");
+        Player Player = createPlayerInstance();
+        JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
+        BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("player.json");
 
-        toJsonConverter.convert(customer, bufferedWriter);
+        JsonConverter<Player> simpleObjectJsonConverter = new SimpleObjectJsonConverter<>();
+        simpleObjectJsonConverter.convert(Player, bufferedWriter);
+        simpleObjectJsonConverter.closeWriter(bufferedWriter);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("customer.json"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("player.json"));
 
         String firstLine = bufferedReader.readLine();
         String secondLine = bufferedReader.readLine();
@@ -52,12 +44,14 @@ public class JsonConverterTest extends Configuration {
         bufferedReader.close();
 
         //delete the file
-        File file = new File("customer.json");
+        File file = new File("player.json");
         file.delete();
     }
 
     @Test
     public void testSimpleObjectSerializerThrowsValidationExceptionForFileName() {
+        JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
+
         assertThrows(
                 ValidationException.class,
                 () -> jsonFileCreator.createJsonFileWriter("fileNameWithoutExtension"),
@@ -73,17 +67,5 @@ public class JsonConverterTest extends Configuration {
                 () -> jsonFileCreator.createJsonFileWriter("file.java"),
                 "The file extension is wrong. Please use the .json extension");
     }
-
-    @Test
-    public void testSimpleObjectSerializerThrowsValidationExceptionForObject() {
-        assertThrows(
-                ValidationException.class,
-                () -> toJsonConverter.convert(null, null),
-                "The object is null or it has zero instance variables");
-
-        assertThrows(
-                ValidationException.class,
-                () -> new ToJsonConverter<ClassWithNoFields>(new ObjectValidator()).convert(new ClassWithNoFields(), null),
-                "The object is null or it has zero instance variables");
-    }
 }
+

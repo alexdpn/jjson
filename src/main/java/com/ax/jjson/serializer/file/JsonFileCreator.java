@@ -1,4 +1,4 @@
-package com.ax.jjson.serializer.converter;
+package com.ax.jjson.serializer.file;
 
 import com.ax.jjson.serializer.Validator;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
@@ -17,8 +17,7 @@ public class JsonFileCreator {
 
     public BufferedWriter createJsonFileWriter(String fileName) throws ValidationException {
         //validate the file extension
-        if(!validator.validate(fileName))
-            throw new ValidationException("The file extension is wrong. Please use the .json extension");
+        validator.validate(fileName);
 
         try {
             return new BufferedWriter(new FileWriter(fileName));
