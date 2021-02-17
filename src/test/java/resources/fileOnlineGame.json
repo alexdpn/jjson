@@ -1,0 +1,23 @@
+{
+  "id" : "1",
+  "name" : "Java Game",
+
+"players" : 
+[
+{
+  "id" : "1",
+  "name" : "Alex",
+  "email" : "alex@mail.com"
+},
+{
+  "id" : "2",
+  "name" : "Mike",
+  "email" : "mike@mail.com"
+},
+{
+  "id" : "3",
+  "name" : "John",
+  "email" : "john@mail.com"
+}
+]
+}

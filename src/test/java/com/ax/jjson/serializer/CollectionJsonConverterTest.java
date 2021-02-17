@@ -15,16 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CollectionJsonConverterTest extends Configuration {
 
     @Test
-    public void testCustomerCollection() throws Exception {
-        Set<Customer> customers = createLisOfCustomers();
+    public void testPlayerCollection() throws Exception {
+        Set<Player> Players = createSetOfPlayers();
 
         JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
-        BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("customers.json");
+        BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("players.json");
 
-        CollectionJsonConverter<Set<Customer>, Customer> converter = new CollectionJsonConverter<>();
-        converter.convert(customers, bufferedWriter);
+        CollectionJsonConverter<Set<Player>, Player> converter = new CollectionJsonConverter<>();
+        converter.convert(Players, bufferedWriter);
         converter.closeWriter(bufferedWriter);
 
-        assertTrue(FileUtils.contentEquals(new File("fileWithCustomers.json"), new File("customers.json")));
+        assertTrue(FileUtils.contentEquals(new File("src/test/java/resources/fileWithPlayers.json"), new File("players.json")));
+
+        File file = new File("players.json");
+        file.delete();
     }
 }
