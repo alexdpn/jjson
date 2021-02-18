@@ -3,7 +3,6 @@ package com.ax.jjson.serializer;
 import com.ax.jjson.serializer.converter.SimpleObjectJsonConverter;
 import com.ax.jjson.serializer.file.JsonFileCreator;
 import com.ax.jjson.serializer.validator.FileNameExtensionValidator;
-import com.ax.jjson.serializer.validator.exception.ValidationException;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.io.FileReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleObjectJsonConverterTest extends Configuration {
 
@@ -46,26 +44,6 @@ public class SimpleObjectJsonConverterTest extends Configuration {
         //delete the file
         File file = new File("player.json");
         file.delete();
-    }
-
-    @Test
-    public void testSimpleObjectSerializerThrowsValidationExceptionForFileName() {
-        JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
-
-        assertThrows(
-                ValidationException.class,
-                () -> jsonFileCreator.createJsonFileWriter("fileNameWithoutExtension"),
-                "The file extension is wrong. Please use the .json extension");
-
-        assertThrows(
-                ValidationException.class,
-                () -> jsonFileCreator.createJsonFileWriter("myfile.xml"),
-                "The file extension is wrong. Please use the .json extension");
-
-        assertThrows(
-                ValidationException.class,
-                () -> jsonFileCreator.createJsonFileWriter("file.java"),
-                "The file extension is wrong. Please use the .json extension");
     }
 }
 
