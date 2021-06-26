@@ -2,7 +2,6 @@ package com.ax.jjson.serializer;
 
 import com.ax.jjson.serializer.converter.CollectionJsonConverter;
 import com.ax.jjson.serializer.file.JsonFileCreator;
-import com.ax.jjson.serializer.validator.FileNameExtensionValidator;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ public class CollectionJsonConverterTest extends Configuration {
     public void testPlayerCollection() throws Exception {
         Set<Player> Players = createSetOfPlayers();
 
-        JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
+        JsonFileCreator jsonFileCreator = new JsonFileCreator();
         BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("players.json");
 
         CollectionJsonConverter<Set<Player>, Player> converter = new CollectionJsonConverter<>();

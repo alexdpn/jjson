@@ -2,7 +2,6 @@ package com.ax.jjson.serializer;
 
 import com.ax.jjson.serializer.converter.SimpleObjectJsonConverter;
 import com.ax.jjson.serializer.file.JsonFileCreator;
-import com.ax.jjson.serializer.validator.FileNameExtensionValidator;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -17,7 +16,7 @@ public class SimpleObjectJsonConverterTest extends Configuration {
     @Test
     public void testSimpleObjectSerializer() throws Exception {
         Player Player = createPlayerInstance();
-        JsonFileCreator jsonFileCreator = new JsonFileCreator(new FileNameExtensionValidator());
+        JsonFileCreator jsonFileCreator = new JsonFileCreator();
         BufferedWriter bufferedWriter = jsonFileCreator.createJsonFileWriter("player.json");
 
         JsonConverter<Player> simpleObjectJsonConverter = new SimpleObjectJsonConverter<>();

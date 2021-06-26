@@ -2,7 +2,7 @@ package com.ax.jjson.serializer.converter;
 
 import com.ax.jjson.serializer.JsonConverter;
 import com.ax.jjson.serializer.Validator;
-import com.ax.jjson.serializer.validator.ObjectWithCollectionTypeValidator;
+import com.ax.jjson.serializer.validator.Validators;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
 
 import java.io.BufferedWriter;
@@ -14,10 +14,8 @@ public final class ObjectWithCollectionJsonConverter<T> extends JsonConverter<T>
 
     @Override
     public void convert(T object, BufferedWriter bufferedWriter) throws ValidationException, IOException, IllegalAccessException {
-        Validator<T> validator = getValidator();
-
         //check if the object is ObjectWithCollection
-        if(validator.validate(object)) {
+        if(this.getValidator().validate(object)) {
             writeBeginningOfFile(bufferedWriter);
 
             JsonConverter<Object> jsonConverter = additionalConverter();
@@ -54,9 +52,10 @@ public final class ObjectWithCollectionJsonConverter<T> extends JsonConverter<T>
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Validator<T> getValidator() {
-        return new ObjectWithCollectionTypeValidator<>();
+    protected <V extends Enum<V> & Validator> V getValidator() {
+        return (V) Validators.OBJECT_WITH_COLLECTION;
     }
 
     @Override

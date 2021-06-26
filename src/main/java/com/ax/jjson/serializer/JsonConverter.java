@@ -1,7 +1,6 @@
 package com.ax.jjson.serializer;
 
 import com.ax.jjson.serializer.file.JsonFileCreator;
-import com.ax.jjson.serializer.validator.FileNameExtensionValidator;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
 
 import java.io.BufferedWriter;
@@ -20,7 +19,7 @@ public abstract class JsonConverter<T> {
      * This method is used to create a validator
      * @return the validator used to validate the fields
      */
-    protected abstract Validator<T> getValidator();
+    protected abstract <V extends Enum<V> & Validator> V getValidator();
 
     /**
      * This method is used to write the beggining of the json file
@@ -57,7 +56,7 @@ public abstract class JsonConverter<T> {
      * @return the JsonFileCreator used to create the json file
      */
     protected final JsonFileCreator getJsonFileCreator() {
-        return new JsonFileCreator(new FileNameExtensionValidator());
+        return new JsonFileCreator();
     }
 
     /**
