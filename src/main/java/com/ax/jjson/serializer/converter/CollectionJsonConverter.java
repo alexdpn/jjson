@@ -2,12 +2,13 @@ package com.ax.jjson.serializer.converter;
 
 import com.ax.jjson.serializer.JsonConverter;
 import com.ax.jjson.serializer.Validator;
-import com.ax.jjson.serializer.validator.Validators;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Collection;
+
+import static com.ax.jjson.serializer.validator.Validators.COLLECTION;
 
 public final class CollectionJsonConverter<T, C> extends JsonConverter<T> {
 
@@ -37,7 +38,7 @@ public final class CollectionJsonConverter<T, C> extends JsonConverter<T> {
     @SuppressWarnings("unchecked")
     @Override
     protected <V extends Enum<V> & Validator> V getValidator() {
-        return (V) Validators.COLLECTION;
+        return (V) COLLECTION;
     }
 
     @Override
