@@ -31,7 +31,7 @@ public enum Validators implements Validator {
         }
     },
 
-    OBJECT_WITH_COLLECTION (() -> ObjectWithCollectionJsonConverter.class){
+    OBJECT_WITH_COLLECTION (() -> ObjectWithCollectionJsonConverter.class) {
         @Override
         public boolean validate(Object object) {
             boolean isValid = false;
