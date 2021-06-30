@@ -11,7 +11,9 @@ import static com.ax.jjson.serializer.validator.Validators.FILE_NAME;
 public class JsonFileCreator {
 
     public BufferedWriter createJsonFileWriter(String fileName) throws ValidationException {
-        //validate the file extension
+        if(!FILE_NAME.getCorrespondingClass().equals(this.getClass()))
+            return null;
+
         FILE_NAME.validate(fileName);
 
         try {

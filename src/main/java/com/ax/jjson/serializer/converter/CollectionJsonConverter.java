@@ -2,6 +2,7 @@ package com.ax.jjson.serializer.converter;
 
 import com.ax.jjson.serializer.JsonConverter;
 import com.ax.jjson.serializer.Validator;
+import com.ax.jjson.serializer.validator.Validators;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
 
 import java.io.BufferedWriter;
@@ -16,7 +17,7 @@ public final class CollectionJsonConverter<T, C> extends JsonConverter<T> {
     @Override
     public void convert(T object, BufferedWriter bufferedWriter) throws ValidationException, IOException, IllegalAccessException {
         //check if the object is Collection
-        if(this.getValidator().validate(object)) {
+        if(this.getClass().equals(((Validators)this.getValidator()).getCorrespondingClass()) && this.getValidator().validate(object)) {
             writeBeginningOfFile(bufferedWriter);
             JsonConverter<C> jsonConverter = additionalConverter();
 

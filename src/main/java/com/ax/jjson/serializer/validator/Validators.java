@@ -1,14 +1,19 @@
 package com.ax.jjson.serializer.validator;
 
 import com.ax.jjson.serializer.Validator;
+import com.ax.jjson.serializer.converter.CollectionJsonConverter;
+import com.ax.jjson.serializer.converter.ObjectWithCollectionJsonConverter;
+import com.ax.jjson.serializer.converter.SimpleObjectJsonConverter;
+import com.ax.jjson.serializer.file.JsonFileCreator;
 import com.ax.jjson.serializer.validator.exception.ValidationException;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 public enum Validators implements Validator {
 
-    SIMPLE_OBJECT {
+    SIMPLE_OBJECT(() -> SimpleObjectJsonConverter.class) {
         @Override
         public boolean validate(Object object) {
             if (Collection.class.isAssignableFrom(object.getClass()))
@@ -26,7 +31,7 @@ public enum Validators implements Validator {
         }
     },
 
-    OBJECT_WITH_COLLECTION {
+    OBJECT_WITH_COLLECTION (() -> ObjectWithCollectionJsonConverter.class){
         @Override
         public boolean validate(Object object) {
             boolean isValid = false;
@@ -47,14 +52,14 @@ public enum Validators implements Validator {
         }
     },
 
-    COLLECTION {
+    COLLECTION(() -> CollectionJsonConverter.class) {
         @Override
         public boolean validate(Object object) {
             return Collection.class.isAssignableFrom(object.getClass());
         }
     },
 
-    FILE_NAME {
+    FILE_NAME(()-> JsonFileCreator.class) {
         @Override
         public boolean validate(Object object) throws ValidationException {
             String JSON_EXTENSION = ".json";
@@ -70,4 +75,14 @@ public enum Validators implements Validator {
             return true;
         }
     };
+
+    private final Supplier<Class<?>> correspondingClass;
+
+    Validators(Supplier<Class<?>> correspondingClass) {
+        this.correspondingClass = correspondingClass;
+    }
+
+    public Class<?> getCorrespondingClass() {
+        return correspondingClass.get();
+    }
 }
